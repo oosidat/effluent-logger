@@ -1,51 +1,34 @@
-fluent-logger-stream
-=============
+effluent-logger
+===============
 
-<a href="https://github.com/cjpark87/fluent-logger-nodejs" target="_blank">fluent-logger-stream</a> is a stream-based Fluentd logger for Node.js. It is designed to be plugged into other logger's output stream. It also can be used as an independent logger for Fluentd.
-
-# Installation
-
-	npm install fluent-logger-stream
+<a href="https://github.com/joshwilsdon/effluent-logger" target="_blank">effluent-logger</a> is a stream-based logger based on: <a href="https://github.com/cjpark87/fluent-logger-nodejs" target="_blank">fluent-logger-stream</a> redesigned to only log using the 'forward' type and to allow a filtered stream of log messages.
 
 # Usage
-### Create logger object
+### Create bunyan log stream
 
-	var Logger = require('fluent-logger-stream');
-	var logger = new Logger({tag: 'debug', type: 'forward', host: '127.0.0.1', port: 24224}); //in_forward
-	var logger = new Logger({tag: 'debug', type: 'http', host: '127.0.0.1', port: 8888}); //in_http
-	var logger = new Logger({tag: 'debug', type: 'tail', filePath: 'debug.log'}); //in_tail
+You can create a bunyan logger `log` with an EffluentLogger stream attached to
+send all messages that have an `evt` property to a remote fluentd server:
 
-### As an independent logger module
+```
+var bunyan = require('bunyan');
+var EffluentLogger = require('effluent-logger');
 
-	var Logger = require('fluent-logger-stream');
+var evtLogger = new EffluentLogger({
+    filter: function _evtFilter(obj) { return (!!obj.evt); },
+    host: '127.0.0.1',
+    port: 24224,
+    tag: 'debug'
+});
 
-	var logger = new Logger({tag: 'debug', type: 'forward', host: '127.0.0.1', port: 24224}); //in_forward
-
-	logger.send('debug', {from: 'userA', to: 'userB'});
-
-### As a writable stream plugin
-<a href="https://github.com/cjpark87/fluent-logger-nodejs" target="_blank">fluent-logger-stream</a> is a writable stream. It can be used as an output stream of other loggers. The examples are shown below.
-
-	var FluentLogger = require('fluent-logger-stream');
-
-	var fluentLogger = new FluentLogger({tag: 'debug', type: 'forward', host: '127.0.0.1', port: 24224}); //in_forward
-
-	//bunyan logger
-	var log = bunyan.createLogger({
-  	  name: 'myapp',
-  	  stream: fluentLogger,
-  	  level: 'debug'
-	});
-
-	//connect logger
-	connect.logger({stream: fluentLogger});
-
-	//..and any other logger modules that supports output stream.
-
-# Todos
-- add tests
-- support more fluentd inputs
-- error handlers
+var log = bunyan.createLogger({
+    name: 'myapp-eventlog',
+    streams: [{
+        stream: evtLogger,
+        type: 'raw'
+    }],
+    level: 'debug'
+});
+```
 
 # License
 The MIT License
