@@ -1,6 +1,7 @@
 {
   "name": "effluent-logger",
   "version": "0.0.1",
+  "private": true,
   "description": "Stream-based Fluentd logger for Node.js",
   "author": "Josh Wilsdon <jwilsdon@joyent.com>",
   "main": "./lib/logger.js",
