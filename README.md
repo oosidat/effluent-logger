@@ -1,6 +1,8 @@
 effluent-logger
 ===============
 
+Fork of [joshwilsdon's effluent-logger](https://github.com/joshwilsdon/effluent-logger)
+
 <a href="https://github.com/joshwilsdon/effluent-logger" target="_blank">effluent-logger</a> is a stream-based logger based on: <a href="https://github.com/cjpark87/fluent-logger-nodejs" target="_blank">fluent-logger-stream</a> redesigned to only log using the 'forward' type and to allow a filtered stream of log messages.
 
 # Usage

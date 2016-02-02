@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "description": "Stream-based Fluentd logger for Node.js",
-  "author": "Josh Wilsdon <jwilsdon@joyent.com>",
+  "author": "Osama Sidat <oosidat@gmail.com>",
   "main": "./lib/logger.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshwilsdon/effluent-logger.git"
+    "url": "https://github.com/oosidat/effluent-logger.git"
   },
   "engines": "node >=0.8.0",
   "keywords": ["fluent", "fluentd", "logger", "stream"],
